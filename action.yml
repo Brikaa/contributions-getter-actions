@@ -64,6 +64,8 @@ runs:
       run: |
         cd "$GITHUB_WORKSPACE/target"
         git add -A
-        git commit -m "Update contributions" --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+        git config --global user.email "contributions-getter"
+        git config --global user.name "contributions-getter"
+        git commit -m "Update contributions"
         git push
       shell: bash
