@@ -1,5 +1,5 @@
 name: contributions-getter-actions
-description: 'get all of the repositories you contributed to since your account\'s creation'
+description: 'get all of the repositories you contributed to since your account creation'
 inputs:
     token:
       description: 'Your GitHub token'
@@ -36,12 +36,15 @@ runs:
       uses: actions/setup-node@v3
     - name: Install npm packages and build code
       run: cd "${{ github.action_path }}" && npm install && npm run build
+      shell: bash
     - name: Set env vars
       run: |
         for i in "${{ inputs.header-format }}" "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}"; do
           if [ -n "$i" ]; then
             echo "$i" >> $GITHUB_ENV
           fi
+        done
+      shell: bash
     - name: Run
       run: cd "${{ github.action_path }}" && npm start --silent > "$GITHUB_WORKSPACE/target/${{ inputs.output-file-name }}"
       shell: bash
@@ -51,3 +54,4 @@ runs:
         git add -A
         git commit -m "Update contributions" --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
         git push
+      shell: bash
