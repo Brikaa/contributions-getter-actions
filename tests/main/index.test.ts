@@ -21,50 +21,50 @@ const INVALID_MINIMUM_STARS_FOR_HIGHLIGHT = "asd";
 const HEADER_FORMAT = `[${NO_COMMITS_SYMBOL}](${COMMITS_URL_SYMBOL}) in [${REPO_NAME_SYMBOL}](${REPO_URL_SYMBOL}) \
 using ${PRIMARY_LANGUAGE_SYMBOL}\n${REPO_DESCRIPTION_SYMBOL}`;
 const HIGHLIGHT_FORMAT = `[COOL] ${HEADER_SYMBOL}`;
-const FILE_BEFORE = path.join(__dirname, "before.md");
-const FILE_AFTER = path.join(__dirname, "after.md");
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_USERNAME = process.env.GITHUB_USERNAME;
+const FILE_BEFORE_PATH = path.join(__dirname, "before.md");
+const FILE_AFTER_PATH = path.join(__dirname, "after.md");
+const TOKEN = process.env.TOKEN;
+const USERNAME = process.env.USERNAME;
 
 /*
 Combinations
-- Single year, HEADER_FORMAT: default, HIGHLIGHT_FORMAT: default, FILE_BEFORE: default, FILE_AFTER: default,
-  MINIMUM_STARS_FOR_HIGHLIGHT: default, MONTHS_INTERVAL: default
-- Multiple years, HEADER_FORMAT: default, HIGHLIGHT_FORMAT: modified, FILE_BEFORE: default, FILE_AFTER: modified,
-  MINIMUM_STARS_FOR_HIGHLIGHT: modified, MONTHS_INTERVAL: modified
-- Multiple years, HEADER_FORMAT: modified, HIGHLIGHT_FORMAT: default, FILE_BEFORE: modified, FILE_AFTER: default,
-  MINIMUM_STARS_FOR_HIGHLIGHT: default, MONTHS_INTERVAL: default
-- Multiple years, HEADER_FORMAT: modified, HIGHLIGHT_FORMAT: modified, FILE_BEFORE: modified, FILE_AFTER: modified,
-  MINIMUM_STARS_FOR_HIGHLIGHT: default, MONTHS_INTERVAL: default
+- Single year, HEADER_FORMAT: default, HIGHLIGHT_FORMAT: default,
+  FILE_BEFORE_PATH: default, FILE_AFTER_PATH: default, MINIMUM_STARS_FOR_HIGHLIGHT: default, MONTHS_INTERVAL: default
+- Multiple years, HEADER_FORMAT: default, HIGHLIGHT_FORMAT: modified,
+  FILE_BEFORE_PATH: default, FILE_AFTER_PATH: modified, MINIMUM_STARS_FOR_HIGHLIGHT: modified, MONTHS_INTERVAL: modified
+- Multiple years, HEADER_FORMAT: modified, HIGHLIGHT_FORMAT: default,
+  FILE_BEFORE_PATH: modified, FILE_AFTER_PATH: default, MINIMUM_STARS_FOR_HIGHLIGHT: default, MONTHS_INTERVAL: default
+- Multiple years, HEADER_FORMAT: modified, HIGHLIGHT_FORMAT: modified,
+  FILE_BEFORE_PATH: modified, FILE_AFTER_PATH: modified, MINIMUM_STARS_FOR_HIGHLIGHT: default, MONTHS_INTERVAL: default
 - Empty, first
 */
 const ENV_COMBINATIONS: Environment[] = [
-  { GITHUB_TOKEN, GITHUB_USERNAME },
+  { TOKEN, USERNAME },
   {
-    GITHUB_TOKEN,
-    GITHUB_USERNAME,
+    TOKEN,
+    USERNAME,
     HIGHLIGHT_FORMAT,
-    FILE_AFTER,
+    FILE_AFTER_PATH,
     MINIMUM_STARS_FOR_HIGHLIGHT,
     MONTHS_INTERVAL,
   },
   {
-    GITHUB_TOKEN,
-    GITHUB_USERNAME,
+    TOKEN,
+    USERNAME,
     HEADER_FORMAT,
-    FILE_BEFORE,
+    FILE_BEFORE_PATH,
   },
   {
-    GITHUB_TOKEN,
-    GITHUB_USERNAME,
+    TOKEN,
+    USERNAME,
     HEADER_FORMAT,
     HIGHLIGHT_FORMAT,
-    FILE_AFTER,
-    FILE_BEFORE,
+    FILE_AFTER_PATH,
+    FILE_BEFORE_PATH,
   },
   {
-    GITHUB_TOKEN,
-    GITHUB_USERNAME,
+    TOKEN,
+    USERNAME,
     MINIMUM_STARS_FOR_HIGHLIGHT: INVALID_MINIMUM_STARS_FOR_HIGHLIGHT,
   },
 ];

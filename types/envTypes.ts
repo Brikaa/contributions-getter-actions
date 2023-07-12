@@ -1,7 +1,7 @@
 // Default values for some optional properties can be found in constants.ts
 export interface Environment {
-  GITHUB_TOKEN: string; // GitHub token
-  GITHUB_USERNAME: string; // GitHub username
+  TOKEN: string; // GitHub token
+  USERNAME: string; // GitHub username
 
   // The format that is used in the repo header
   // You can use special keywords in this header that are replaced at runtime, check constants.ts
@@ -12,8 +12,8 @@ export interface Environment {
   // Default value exists in constants.ts
   HIGHLIGHT_FORMAT?: string;
 
-  FILE_BEFORE?: string; // The markdown file to put its content before the contributions content
-  FILE_AFTER?: string; // The markdown file to put its content after the contributions content
+  FILE_BEFORE_PATH?: string; // The markdown file to put its content before the contributions content
+  FILE_AFTER_PATH?: string; // The markdown file to put its content after the contributions content
   MINIMUM_STARS_FOR_HIGHLIGHT?: number; // The minimum number of stars required for a repo to be highlighted
   MONTHS_INTERVAL?: number; // The interval at which to get the contributions
 }

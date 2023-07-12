@@ -97,16 +97,14 @@ export const getContributionsMarkdownUsingEnvConfig = async (
     else return xInt;
   });
   const env = cleanEnv<Environment>(process.env, {
-    GITHUB_TOKEN: str(),
-    GITHUB_USERNAME: str(),
-    FILE_AFTER: str({ default: undefined }),
-    FILE_BEFORE: str({ default: undefined }),
-    HEADER_FORMAT: str({ default: DEFAULT_HEADER_FORMAT }),
-    HIGHLIGHT_FORMAT: str({ default: DEFAULT_HIGHLIGHT_FORMAT }),
-    MINIMUM_STARS_FOR_HIGHLIGHT: int({
-      default: DEFAULT_MINIMUM_STARS_FOR_HIGHLIGHT,
-    }),
-    MONTHS_INTERVAL: int({ default: DEFAULT_MONTHS_INTERVAL }),
+    TOKEN: str(),
+    USERNAME: str(),
+    FILE_AFTER_PATH: str({ default: undefined }),
+    FILE_BEFORE_PATH: str({ default: undefined }),
+    HEADER_FORMAT: str({ default: undefined }),
+    HIGHLIGHT_FORMAT: str({ default: undefined }),
+    MINIMUM_STARS_FOR_HIGHLIGHT: int({ default: undefined }),
+    MONTHS_INTERVAL: int({ default: undefined }),
   });
   const config: Config = {
     contributionsGetterConfig: {
@@ -114,14 +112,14 @@ export const getContributionsMarkdownUsingEnvConfig = async (
     },
     headerFormat: env.HEADER_FORMAT,
     highlightFormat: env.HIGHLIGHT_FORMAT,
-    fileBefore: env.FILE_BEFORE,
-    fileAfter: env.FILE_AFTER,
+    fileBefore: env.FILE_BEFORE_PATH,
+    fileAfter: env.FILE_AFTER_PATH,
     minimumStarsForHighlight: env.MINIMUM_STARS_FOR_HIGHLIGHT,
     getContributionsFn,
   };
   const markdown = await getContributionsMarkdown(
-    env.GITHUB_TOKEN,
-    env.GITHUB_USERNAME,
+    env.TOKEN,
+    env.USERNAME,
     config,
   );
   return markdown;
