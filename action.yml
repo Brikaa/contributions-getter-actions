@@ -54,6 +54,8 @@ runs:
             echo "${names[i]}${values[i]}" | tee $GITHUB_ENV
           fi
         done
+        echo "TOKEN=""${{ inputs.token }}" >> $GITHUB_ENV
+        echo "USERNAME=""${{ github.repository_owner }}" >> $GITHUB_ENV
       shell: bash
     - name: Run
       run: cd "${{ github.action_path }}" && npm start --silent > "$GITHUB_WORKSPACE/target/${{ inputs.output-file-name }}"
