@@ -17,6 +17,9 @@ inputs:
     file-before-path:
       description: 'Check documentation'
       required: false
+    file-after-path:
+      description: 'Check documentation'
+      required: false
     minimum-stars-for-highlight:
       description: 'Check documentation'
       required: false
@@ -39,9 +42,16 @@ runs:
       shell: bash
     - name: Set env vars
       run: |
-        for i in "${{ inputs.header-format }}" "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}"; do
-          if [ -n "$i" ]; then
-            echo "$i" >> $GITHUB_ENV
+        names=("HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=")
+        values=("${{ inputs.header-format }}" "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}")
+        length=${#names[@]}
+        let l=$length-1
+        for i in $(seq 0 $l); do
+          if [ -n "${values[i]}" ]; then
+            if [ "${names[i]}" = "FILE_BEFORE_PATH=" ] || [ "${names[i]}" = "FILE_AFTER_PATH=" ]; then
+              values[$i]="$GITHUB_WORKSPACE/target/""${values[i]}"
+            fi
+            echo "${names[i]}${values[i]}" | tee $GITHUB_ENV
           fi
         done
       shell: bash
