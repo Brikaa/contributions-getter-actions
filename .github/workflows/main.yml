@@ -1,0 +1,12 @@
+name: contributions-getter
+on: workflow_dispatch
+jobs:
+  contributions_getter_job:
+    runs-on: ubuntu-latest
+    name: contributions-getter
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      - uses: ./
+        with:
+          token: ${{ secrets.TOKEN }}
