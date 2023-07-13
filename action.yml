@@ -40,6 +40,12 @@ runs:
     - name: Install npm packages and build code
       run: cd "${{ github.action_path }}" && npm install && npm run build
       shell: bash
+    - name: Validate paths
+      run: |
+        cd "$GITHUB_WORKSPACE/target"
+        for i in "${{ inputs.output-file-name }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}"; do
+          node scripts/checkSafePath.js "$(pwd)" "$i"
+        done
     - name: Set env vars
       run: |
         names=("TOKEN=" "USERNAME=" "HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=")
