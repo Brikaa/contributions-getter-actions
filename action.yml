@@ -51,7 +51,7 @@ runs:
             if [ "${names[i]}" = "FILE_BEFORE_PATH=" ] || [ "${names[i]}" = "FILE_AFTER_PATH=" ]; then
               values[$i]="$GITHUB_WORKSPACE/target/""${values[i]}"
             fi
-            echo "${names[i]}${values[i]}"
+            echo "${names[i]}${values[i]}" >> "$GITHUB_ENV"
           fi
         done
       shell: bash

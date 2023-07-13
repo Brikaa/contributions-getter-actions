@@ -1,5 +1,5 @@
 TODO
-    - Test with different inputs
     - Use MM/YYYY date format
     - contributionYear -> contributionInterval
     - Contribution -> ContributionInterval
+    - Test with different inputs
