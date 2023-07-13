@@ -42,8 +42,8 @@ runs:
       shell: bash
     - name: Set env vars
       run: |
-        names=("HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=")
-        values=("${{ inputs.header-format }}" "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}")
+        names=("TOKEN=" "USERNAME=" "HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=")
+        values=("${{ inputs.token }}" "${{ github.repository_owner }}" "${{ inputs.header-format }}" "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}")
         length=${#names[@]}
         let l=$length-1
         for i in $(seq 0 $l); do
@@ -51,11 +51,9 @@ runs:
             if [ "${names[i]}" = "FILE_BEFORE_PATH=" ] || [ "${names[i]}" = "FILE_AFTER_PATH=" ]; then
               values[$i]="$GITHUB_WORKSPACE/target/""${values[i]}"
             fi
-            echo "${names[i]}${values[i]}" | tee $GITHUB_ENV
+            echo "${names[i]}${values[i]}"
           fi
         done
-        echo "TOKEN=""${{ inputs.token }}" >> $GITHUB_ENV
-        echo "USERNAME=""${{ github.repository_owner }}" >> $GITHUB_ENV
       shell: bash
     - name: Run
       run: cd "${{ github.action_path }}" && npm start --silent > "$GITHUB_WORKSPACE/target/${{ inputs.output-file-name }}"
