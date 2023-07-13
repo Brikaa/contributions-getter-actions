@@ -68,6 +68,10 @@ runs:
     - name: Commit
       run: |
         cd "$GITHUB_WORKSPACE/target"
+        if [[ `git status --porcelain` ]]; then
+          echo "No changes"
+          exit 0
+        fi
         git add -A
         git config --global user.email "contributions-getter"
         git config --global user.name "contributions-getter"

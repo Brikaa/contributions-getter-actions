@@ -1,5 +1,4 @@
 TODO
-    - Prevent escaping directory
     - Test with different inputs
     - Configurable sort?
     - Repos ignore?
