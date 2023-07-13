@@ -46,6 +46,7 @@ runs:
         for i in "${{ inputs.output-file-name }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}"; do
           node scripts/checkSafePath.js "$(pwd)" "$i"
         done
+      shell: bash
     - name: Set env vars
       run: |
         names=("TOKEN=" "USERNAME=" "HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=")
