@@ -1,4 +1,4 @@
-## 2022 - 2023
+## 2022-07-13 -> 2023-07-13
 
 <details>
 
@@ -85,7 +85,7 @@ Visual Studio Code
 
 </details>
 
-## 2021 - 2022
+## 2021-07-13 -> 2022-07-13
 
 <details>
 
@@ -145,7 +145,7 @@ Omar Brikaa's personal website.
 
 </details>
 
-## 2020 - 2021
+## 2020-07-13 -> 2021-07-13
 
 <details>
 
@@ -172,7 +172,7 @@ no description
 
 </details>
 
-## 2017 - 2018
+## 2017-07-13 -> 2018-07-13
 
 <details>
 
