@@ -1,5 +1,5 @@
 TODO
-    - Use MM/YYYY date format
-    - contributionYear -> contributionInterval
-    - Contribution -> ContributionInterval
+    - Prevent escaping directory
+    - Repos ignore?
+    - Configurable sort?
     - Test with different inputs

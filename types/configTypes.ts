@@ -1,12 +1,9 @@
 import {
-  Contribution,
   Config as ContributionsGetterConfig,
   getContributions,
 } from "contributions-getter";
 
-export type GetContributionsType = (
-  ...args: Parameters<typeof getContributions>
-) => Promise<Contribution[]>;
+export type GetContributionsType = typeof getContributions;
 
 export interface Config {
   contributionsGetterConfig?: ContributionsGetterConfig;

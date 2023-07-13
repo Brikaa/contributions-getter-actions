@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "@types/node": "^20.4.0",
-    "contributions-getter": "^1.0.1",
+    "contributions-getter": "^2.0.0",
     "envalid": "^7.3.1",
     "ts-jest": "^29.1.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
-    "dotenv": "^16.3.1",
     "jest": "^29.6.1",
     "prettier": "^3.0.0",
     "typescript": "^5.1.6"
