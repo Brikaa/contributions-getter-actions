@@ -16,6 +16,7 @@ import {
 import { Environment } from "../types/envTypes";
 import { readFileSync } from "fs";
 import { cleanEnv, makeValidator, str } from "envalid";
+import { formatDate } from "./util";
 
 const getContributionsMarkdown = async (
   token: string,
@@ -40,19 +41,21 @@ const getContributionsMarkdown = async (
   const contentAfter =
     fileAfter === undefined ? null : readFileSync(fileAfter).toString();
 
-  const contributionsYears = await getContributionsFn(
+  const contributionsInterval = await getContributionsFn(
     token,
     userName,
     contributionsGetterConfig,
   );
 
-  contributionsYears
-    .filter((cy) => cy.repos.length > 0)
-    .forEach((cy) => {
+  contributionsInterval
+    .filter((ci) => ci.repos.length > 0)
+    .forEach((ci) => {
       markdown.push(
-        `## ${cy.startDate.getFullYear()} - ${cy.endDate.getFullYear()}\n\n<details>\n`,
+        `## ${formatDate(ci.startDate)} -> ${formatDate(
+          ci.endDate,
+        )}\n\n<details>\n`,
       );
-      cy.repos
+      ci.repos
         .filter((r) => !r.isPrivate)
         .forEach((r) => {
           const header = headerFormat
