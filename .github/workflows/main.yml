@@ -10,3 +10,4 @@ jobs:
     - uses: ./
       with:
         token: ${{ secrets.TOKEN }}
+        OUTPUT_FILE_NAME: example.md
