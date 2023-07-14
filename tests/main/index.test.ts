@@ -52,8 +52,8 @@ afterAll(async () => {
     }
   }
   const markdown = await getContributionsMarkdownUsingEnvConfig();
-  writeFileSync(path.join(__dirname, "/outputs/unit.md"), markdown);
-  writeFileSync(path.join(__dirname, "/outputs/.env"), envStr);
+  writeFileSync("tests/main/outputs/unit.md", markdown);
+  writeFileSync("tests/main/outputs/.env", envStr);
 });
 
 const testAgainstEnv = async (env: Environment, expectedMarkdown: string) => {
