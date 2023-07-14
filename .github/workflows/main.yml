@@ -38,6 +38,10 @@ jobs:
       - name: Verify happy path output
         run: |
           echo $TESTS_RESULT > tests/main/outputs/unit.md
+          echo "================= unit.md ================="
+          cat tests/main/outputs/unit.md
+          echo "================= action.md ================="
+          cat tests/main/outputs/action.md
           cmp tests/main/outputs/unit.md tests/main/outputs/action.md && echo "Got same output as unit tests" \
           || echo "Got different output than unit tests" && exit 1
         shell: bash
