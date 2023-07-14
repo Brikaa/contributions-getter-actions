@@ -18,7 +18,7 @@ jobs:
       - name: Set env vars
         run: |
           cat tests/main/outputs/.env >> $GITHUB_ENV
-          TESTS_RESULT=$(cat tests/main/outputs/unit.md)
+          echo "TESTS_RESULT=$(cat tests/main/outputs/unit.md)" >> $GITHUB_ENV
         shell: bash
       - name: Set happy path output
         uses: ./
@@ -37,11 +37,6 @@ jobs:
         run: |
           echo $TESTS_RESULT > tests/main/outputs/unit.md
           cat tests/main/outputs/unit.md
-          cat tests/main/outputs/action.md
-          if [[ `cmp tests/main/outputs/unit.md tests/main/outputs/action.md` ]]; then
-            echo "Got same output as unit tests"
-          else
-            echo "Got different output than unit tests"
-            exit 1
-          fi
+          cmp tests/main/outputs/unit.md tests/main/outputs/action.md && echo "Got same output as unit tests" \
+          || echo "Got different output than unit tests" && exit 1
         shell: bash
