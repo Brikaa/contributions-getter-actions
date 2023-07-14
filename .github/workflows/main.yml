@@ -21,7 +21,8 @@ jobs:
       - name: Set normal path output
         uses: ./
         with:
-          token: ${{ secrets.TOKEN }}
+          token: ${{ env.TOKEN }}
+          username: ${{ env.USERNAME }}
           output-file-name: tests/main/outputs/action.md
           header-format: ${{ env.HEADER_FORMAT }}
           highlight-format: ${{ env.HIGHLIGHT_FORMAT }}
