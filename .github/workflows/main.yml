@@ -23,7 +23,7 @@ jobs:
         with:
           token: ${{ env.TOKEN }}
           username: ${{ env.USERNAME }}
-          output-file-name: ${{ env.GITHUB_WORKSPACE }}/action.md
+          output-file-path: ${{ env.GITHUB_WORKSPACE }}/action.md
           header-format: ${{ env.HEADER_FORMAT }}
           highlight-format: ${{ env.HIGHLIGHT_FORMAT }}
           file-before-path: ${{ env.FILE_BEFORE_PATH }}
@@ -31,11 +31,17 @@ jobs:
           minimum-stars-for-highlight: ${{ env.MINIMUM_STARS_FOR_HIGHLIGHT }}
           months-interval: ${{ env.MONTHS_INTERVAL }}
           get-contributions-fn: ${{ env.GET_CONTRIBUTIONS_FN }}
+      - name: Download contributions
+        uses: actions/download-artifact@v3
+        with:
+          name: contributions
+          path: tests/main/outputs/action.md
       - name: verify normal path output
         run: |
-          if [[ `cmp "$GITHUB_WORKSPACE/action.md" tests/main/outputs/unit.md` ]]; then
+          if [[ `cmp tests/main/outputs/action.md tests/main/outputs/unit.md` ]]; then
             echo "Got same output as unit tests"
           else
-            echo "Got different outputs than unit tests"
+            echo "Got different output than unit tests"
             exit 1
           fi
+        shell: bash

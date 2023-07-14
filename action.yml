@@ -8,7 +8,7 @@ inputs:
     description: "Your GitHub username"
     required: false
     default: ${{ github.repository_owner }}
-  output-file-name:
+  output-file-path:
     description: "The name of the file in which to output the contributions"
     required: false
     default: "README.md"
@@ -38,8 +38,6 @@ runs:
   steps:
     - name: Checkout the repo
       uses: actions/checkout@v3
-      with:
-        path: "target"
     - name: Setup Node
       uses: actions/setup-node@v3
     - name: Install npm packages and build code
@@ -47,40 +45,38 @@ runs:
       shell: bash
     - name: Validate paths
       run: |
-        cd "$GITHUB_WORKSPACE/target"
-        for i in "${{ inputs.output-file-name }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}"; do
+        cd "$GITHUB_WORKSPACE"
+        for i in "${{ inputs.output-file-path }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}"; do
           node scripts/checkSafePath.js "$(pwd)" "$i"
         done
       shell: bash
     - name: Set env vars
       run: |
-        names=("TOKEN=" "USERNAME=" "HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" \
-        "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=" "GET_CONTRIBUTIONS_FN=")
+        names=("TOKEN" "USERNAME" "HEADER_FORMAT" "HIGHLIGHT_FORMAT" "FILE_BEFORE_PATH" "FILE_AFTER_PATH" \
+        "MINIMUM_STARS_FOR_HIGHLIGHT" "MONTHS_INTERVAL" "GET_CONTRIBUTIONS_FN" "OUTPUT_FILE_PATH")
 
         values=("${{ inputs.token }}" "${{ github.repository_owner }}" "${{ inputs.header-format }}" \
         "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" \
         "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}" \
-        "${{ inputs.get-contributions-fn }}")
+        "${{ inputs.get-contributions-fn }}" ${{ inputs.output-file-path }})
 
         length=${#names[@]}
         let l=$length-1
         for i in $(seq 0 $l); do
           if [ -n "${values[i]}" ]; then
-            if [ "${names[i]}" = "FILE_BEFORE_PATH=" ] || [ "${names[i]}" = "FILE_AFTER_PATH=" ]; then
-              values[$i]="$GITHUB_WORKSPACE/target/""${values[i]}"
+            if [[ ${names[i]} = *_PATH ]]; then
+              values[$i]="$GITHUB_WORKSPACE/${values[i]}"
             fi
-            echo "${names[i]}${values[i]}" >> "$GITHUB_ENV"
+            echo "${names[i]}=${values[i]}" >> "$GITHUB_ENV"
           fi
         done
       shell: bash
     - name: Run
-      run: |
-        cd "${{ github.action_path }}" && \
-        npm start --silent > "$GITHUB_WORKSPACE/target/${{ inputs.output-file-name }}"
+      run: cd "${{ github.action_path }}" && npm start --silent > "$OUTPUT_FILE_PATH"
       shell: bash
     - name: Commit
       run: |
-        cd "$GITHUB_WORKSPACE/target"
+        cd "$GITHUB_WORKSPACE"
         if [[ `git status --porcelain` ]]; then
           git add -A
           git config --global user.email "contributions-getter"
@@ -91,3 +87,8 @@ runs:
           echo "No changes"
         fi
       shell: bash
+    - name: Upload contributions
+      uses: actions/upload-artifact@v3
+      with:
+        name: contributions
+        path: ${{ env.OUTPUT_FILE_PATH }}
