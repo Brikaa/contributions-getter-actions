@@ -3,7 +3,7 @@ import {
   getContributions,
 } from "contributions-getter";
 
-export type GetContributionsType = typeof getContributions;
+export type GetContributions = typeof getContributions;
 
 export interface Config {
   contributionsGetterConfig?: ContributionsGetterConfig;
@@ -12,5 +12,9 @@ export interface Config {
   fileBefore?: string;
   fileAfter?: string;
   minimumStarsForHighlight?: number;
-  getContributionsFn?: GetContributionsType;
+  getContributionsFn?: GetContributions;
 }
+
+export const GET_CONTRIBUTIONS_TYPES = ["EMPTY", "SINGLE", "MULTIPLE"] as const;
+
+export type GetContributionsType = (typeof GET_CONTRIBUTIONS_TYPES)[number];

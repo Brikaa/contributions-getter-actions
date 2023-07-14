@@ -1,5 +1,5 @@
 import { getContributions } from "contributions-getter";
-import { Config, GetContributionsType } from "../types/configTypes";
+import { Config, GET_CONTRIBUTIONS_TYPES } from "../types/configTypes";
 import {
   COMMITS_URL_SYMBOL,
   DEFAULT_HEADER_FORMAT,
@@ -16,6 +16,11 @@ import { Environment } from "../types/envTypes";
 import { readFileSync } from "fs";
 import { cleanEnv, makeValidator, str } from "envalid";
 import { formatDate } from "./util";
+import {
+  emptyGetContributions,
+  multipleYearsGetContributions,
+  singleYearGetContributions,
+} from "../mocks/getContributionsMock";
 
 const getContributionsMarkdown = async (
   token: string,
@@ -90,14 +95,34 @@ const getContributionsMarkdown = async (
   return markdown.join("\n");
 };
 
-export const getContributionsMarkdownUsingEnvConfig = async (
-  getContributionsFn: GetContributionsType = getContributions,
-) => {
+export const getContributionsMarkdownUsingEnvConfig = async () => {
   const int = makeValidator((x) => {
     const xInt = parseInt(x);
     if (isNaN(xInt)) throw new Error("Expected a number");
     else return xInt;
   });
+
+  const validGetContributionsFn = makeValidator((x) => {
+    const getContributionsType = GET_CONTRIBUTIONS_TYPES.find((c) => c === x);
+    if (getContributionsType === undefined)
+      throw new Error("Invalid GET_CONTRIBUTIONS_FN");
+    else {
+      let getContributionsFn;
+      switch (getContributionsType) {
+        case "EMPTY":
+          getContributionsFn = emptyGetContributions;
+          break;
+        case "MULTIPLE":
+          getContributionsFn = multipleYearsGetContributions;
+          break;
+        case "SINGLE":
+          getContributionsFn = singleYearGetContributions;
+          break;
+      }
+      return getContributionsFn;
+    }
+  });
+
   const env = cleanEnv<Environment>(process.env, {
     TOKEN: str(),
     USERNAME: str(),
@@ -107,7 +132,9 @@ export const getContributionsMarkdownUsingEnvConfig = async (
     HIGHLIGHT_FORMAT: str({ default: undefined }),
     MINIMUM_STARS_FOR_HIGHLIGHT: int({ default: undefined }),
     MONTHS_INTERVAL: int({ default: undefined }),
+    GET_CONTRIBUTIONS_FN: validGetContributionsFn({ default: undefined }),
   });
+
   const config: Config = {
     contributionsGetterConfig: {
       monthsInterval: env.MONTHS_INTERVAL,
@@ -117,7 +144,7 @@ export const getContributionsMarkdownUsingEnvConfig = async (
     fileBefore: env.FILE_BEFORE_PATH,
     fileAfter: env.FILE_AFTER_PATH,
     minimumStarsForHighlight: env.MINIMUM_STARS_FOR_HIGHLIGHT,
-    getContributionsFn,
+    getContributionsFn: env.GET_CONTRIBUTIONS_FN,
   };
   const markdown = await getContributionsMarkdown(
     env.TOKEN,

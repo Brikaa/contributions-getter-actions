@@ -1,40 +1,40 @@
 name: contributions-getter-actions
-description: 'get all of the repositories you contributed to since your account creation'
+description: "Update a markdown file with all of the repositories you have contributed to since your account creation"
 inputs:
-    token:
-      description: 'Your GitHub token'
-      required: true
-    output-file-name:
-      description: 'The name of the file in which to output the contributions'
-      required: false
-      default: 'README.md'
-    header-format:
-      description: 'Check documentation'
-      required: false
-    highlight-format:
-      description: 'Check documentation'
-      required: false
-    file-before-path:
-      description: 'Check documentation'
-      required: false
-    file-after-path:
-      description: 'Check documentation'
-      required: false
-    minimum-stars-for-highlight:
-      description: 'Check documentation'
-      required: false
-      type: number
-    months-interval:
-      description: 'Check documentation'
-      required: false
-      type: number
+  token:
+    description: "Your GitHub token"
+    required: true
+  output-file-name:
+    description: "The name of the file in which to output the contributions"
+    required: false
+    default: "README.md"
+  header-format:
+    description: "Check documentation"
+    required: false
+  highlight-format:
+    description: "Check documentation"
+    required: false
+  file-before-path:
+    description: "Check documentation"
+    required: false
+  file-after-path:
+    description: "Check documentation"
+    required: false
+  minimum-stars-for-highlight:
+    description: "Check documentation"
+    required: false
+    type: number
+  months-interval:
+    description: "Check documentation"
+    required: false
+    type: number
 runs:
   using: composite
   steps:
     - name: Checkout the repo
       uses: actions/checkout@v3
       with:
-        path: 'target'
+        path: "target"
     - name: Setup Node
       uses: actions/setup-node@v3
     - name: Install npm packages and build code
