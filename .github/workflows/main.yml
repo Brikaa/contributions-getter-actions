@@ -31,14 +31,14 @@ jobs:
           minimum-stars-for-highlight: ${{ env.MINIMUM_STARS_FOR_HIGHLIGHT }}
           months-interval: ${{ env.MONTHS_INTERVAL }}
           get-contributions-fn: ${{ env.GET_CONTRIBUTIONS_FN }}
-      # - name: Download contributions
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: contributions
-      #     path: tests/main/outputs/action.md
+      - name: Download contributions
+        uses: actions/download-artifact@v3
+        with:
+          name: contributions
+          path: tests/main/outputs/action-output.md
       - name: verify normal path output
         run: |
-          if [[ `cmp tests/main/outputs/action.md tests/main/outputs/unit.md` ]]; then
+          if [[ `cmp tests/main/outputs/action-output.md tests/main/outputs/unit.md` ]]; then
             echo "Got same output as unit tests"
           else
             echo "Got different output than unit tests"
