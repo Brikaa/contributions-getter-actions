@@ -37,7 +37,7 @@ jobs:
           get-contributions-fn: ${{ env.GET_CONTRIBUTIONS_FN }}
       - name: Verify happy path output
         run: |
-          cmp "$GITHUB_WORKSPACE/tests-result/unit.md" tests/main/outputs/action.md \
-          && echo "Got same output as unit tests" \
+          echo $TESTS_RESULT > tests/main/outputs/unit.md
+          cmp tests/main/outputs/unit.md tests/main/outputs/action.md && echo "Got same output as unit tests" \
           || echo "Got different output than unit tests" && exit 1
         shell: bash
