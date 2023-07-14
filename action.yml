@@ -87,8 +87,3 @@ runs:
           echo "No changes"
         fi
       shell: bash
-    - name: Upload contributions
-      uses: actions/upload-artifact@v3
-      with:
-        name: contributions
-        path: ${{ env.OUTPUT_FILE_PATH }}
