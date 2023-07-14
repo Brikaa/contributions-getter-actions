@@ -18,7 +18,7 @@ jobs:
       - name: Set env vars
         run: |
           cat tests/main/outputs/.env >> $GITHUB_ENV
-          cat tests/main/outputs/unit.md >> $TESTS_RESULT
+          TESTS_RESULT=$(cat tests/main/outputs/unit.md)
         shell: bash
       - name: Set happy path output
         uses: ./
