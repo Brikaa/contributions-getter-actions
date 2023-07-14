@@ -12,13 +12,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
       - name: Install npm packages and build code
-        run: npm install && npm run build
+        run: cd "$GITHUB_WORKSPACE/contributions-getter-actions-main" && npm install && npm run build
         shell: bash
       - name: Run unit tests
-        run: npm test
+        run: cd "$GITHUB_WORKSPACE/contributions-getter-actions-main" && npm test
         shell: bash
       - name: Set env vars
-        run: cat tests/main/outputs/.env >> $GITHUB_ENV
+        run: cat "$GITHUB_WORKSPACE/contributions-getter-actions-main/tests/main/outputs/.env" >> $GITHUB_ENV
         shell: bash
       - name: Set normal path output
         uses: ./
