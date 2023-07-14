@@ -49,7 +49,7 @@ afterAll(async () => {
   for (const key in process.env) {
     const value = process.env[key];
     if (value !== undefined) {
-      envStr += `${key}<<EOF\n'${value}'\nEOF\n`;
+      envStr += `${key}<<EOF\n${value}\nEOF\n`;
     }
   }
   const markdown = await getContributionsMarkdownUsingEnvConfig();

@@ -67,7 +67,7 @@ runs:
             if [[ ${names[i]} = *_PATH ]]; then
               values[$i]="$GITHUB_WORKSPACE/${values[i]}"
             fi
-            echo "${names[i]}=${values[i]}" >> "$GITHUB_ENV"
+            echo '${names[i]}=${values[i]}' >> "$GITHUB_ENV"
           fi
         done
       shell: bash
