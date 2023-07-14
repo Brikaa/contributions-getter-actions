@@ -19,8 +19,9 @@ const INVALID_MINIMUM_STARS_FOR_HIGHLIGHT = "asd";
 const HEADER_FORMAT = `[${NO_COMMITS_SYMBOL}](${COMMITS_URL_SYMBOL}) in [${REPO_NAME_SYMBOL}](${REPO_URL_SYMBOL}) \
 using ${PRIMARY_LANGUAGE_SYMBOL}\n${REPO_DESCRIPTION_SYMBOL}`;
 const HIGHLIGHT_FORMAT = `[COOL] ${HEADER_SYMBOL}`;
-const FILE_BEFORE_PATH = path.join(__dirname, "before.md");
-const FILE_AFTER_PATH = path.join(__dirname, "after.md");
+const cwd = process.cwd();
+const FILE_BEFORE_PATH = path.relative(cwd, path.join(__dirname, "before.md"));
+const FILE_AFTER_PATH = path.relative(cwd, path.join(__dirname, "after.md"));
 const TOKEN = "MOCK_TOKEN";
 const USERNAME = "Brikaa";
 const EMPTY_GET_CONTRIBUTION_FN = "EMPTY";
@@ -52,8 +53,8 @@ afterAll(async () => {
     }
   }
   const markdown = await getContributionsMarkdownUsingEnvConfig();
-  writeFileSync("tests/main/outputs/unit.md", markdown);
-  writeFileSync("tests/main/outputs/.env", envStr);
+  writeFileSync(path.join(__dirname, "/outputs/unit.md"), markdown);
+  writeFileSync(path.join(__dirname, "/outputs/.env"), envStr);
 });
 
 const testAgainstEnv = async (env: Environment, expectedMarkdown: string) => {
