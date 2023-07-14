@@ -23,7 +23,7 @@ jobs:
         with:
           token: ${{ env.TOKEN }}
           username: ${{ env.USERNAME }}
-          output-file-path: ${{ env.GITHUB_WORKSPACE }}/action.md
+          output-file-path: tests/main/outputs/action.md
           header-format: ${{ env.HEADER_FORMAT }}
           highlight-format: ${{ env.HIGHLIGHT_FORMAT }}
           file-before-path: ${{ env.FILE_BEFORE_PATH }}
