@@ -49,7 +49,7 @@ afterAll(async () => {
   for (const key in process.env) {
     const value = process.env[key];
     if (value !== undefined) {
-      envStr += `${key}=${value.replace(/\n/g, "\\n")}\n`;
+      envStr += `${key}<<EOF\n${value.replace(/\n/g, "\\n")}\nEOF\n`;
     }
   }
   const markdown = await getContributionsMarkdownUsingEnvConfig();

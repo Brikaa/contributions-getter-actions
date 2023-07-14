@@ -18,8 +18,9 @@ jobs:
       - name: Set env vars
         run: |
           cat tests/main/outputs/.env >> $GITHUB_ENV
-          mkdir "$GITHUB_WORKSPACE/tests-result"
-          cp tests/main/outputs/unit.md "$GITHUB_WORKSPACE/tests-result/unit.md"
+          echo "TESTS_RESULT<<EOF" >> $GITHUB_ENV
+          cat tests/main/outputs/unit.md >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
         shell: bash
       - name: Set happy path output
         uses: ./
