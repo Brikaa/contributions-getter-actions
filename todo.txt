@@ -16,7 +16,3 @@ TODO
     - Configurable sort?
     - Repos ignore?
     - Use monthsInterval in mock
-
-- User needs to configure which getContributions function to use
-- Let them enter a string in GET_CONTRIBUTIONS_FN
-- According to the string, inject the function into getContributionsMarkdown

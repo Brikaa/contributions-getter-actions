@@ -7,7 +7,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: ./
+      - name: Setup Node
+        uses: actions/setup-node@v3
+      - name: Install npm packages and build code
+        run: npm install && npm run build
+        shell: bash
+      - name: Run unit tests
+        run: npm test
+        shell: bash
+      - name: Set env vars
+        run: cat tests/main/outputs/.env >> $GITHUB_ENV
+        shell: bash
+      - name: Set normal path output
+        uses: ./
         with:
           token: ${{ secrets.TOKEN }}
-          output-file-name: example.md
+          output-file-name: tests/main/outputs/action.md
+          header-format: ${{ env.HEADER_FORMAT }}
+          highlight-format: ${{ env.HIGHLIGHT_FORMAT }}
+          file-before-path: ${{ env.FILE_BEFORE_PATH }}
+          file-after-path: ${{ env.FILE_AFTER_PATH }}
+          minimum-stars-for-highlight: ${{ env.MINIMUM_STARS_FOR_HIGHLIGHT }}
+          months-interval: ${{ env.MONTHS_INTERVAL }}
+          get-contributions-fn: ${{ env.GET_CONTRIBUTIONS_FN }}
+      - name: verify normal path output
+        run: |
+          if [[ `cmp tests/main/outputs/action.md tests/main/outputs/unit.md` ]]; then
+            echo "Got different outputs that unit tests"
+            exit 1
+          fi

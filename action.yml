@@ -4,6 +4,10 @@ inputs:
   token:
     description: "Your GitHub token"
     required: true
+  username:
+    description: "Your GitHub username"
+    required: false
+    default: ${{ github.repository_owner }}
   output-file-name:
     description: "The name of the file in which to output the contributions"
     required: false
@@ -23,11 +27,12 @@ inputs:
   minimum-stars-for-highlight:
     description: "Check documentation"
     required: false
-    type: number
   months-interval:
     description: "Check documentation"
     required: false
-    type: number
+  get-contributions-fn:
+    description: "Check documentation"
+    required: false
 runs:
   using: composite
   steps:
@@ -49,8 +54,14 @@ runs:
       shell: bash
     - name: Set env vars
       run: |
-        names=("TOKEN=" "USERNAME=" "HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=")
-        values=("${{ inputs.token }}" "${{ github.repository_owner }}" "${{ inputs.header-format }}" "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}")
+        names=("TOKEN=" "USERNAME=" "HEADER_FORMAT=" "HIGHLIGHT_FORMAT=" "FILE_BEFORE_PATH=" "FILE_AFTER_PATH=" \
+        "MINIMUM_STARS_FOR_HIGHLIGHT=" "MONTHS_INTERVAL=" "GET_CONTRIBUTIONS_FN=")
+
+        values=("${{ inputs.token }}" "${{ github.repository_owner }}" "${{ inputs.header-format }}" \
+        "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" \
+        "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}" \
+        "${{ inputs.get-contributions-fn }}")
+
         length=${#names[@]}
         let l=$length-1
         for i in $(seq 0 $l); do
@@ -63,7 +74,9 @@ runs:
         done
       shell: bash
     - name: Run
-      run: cd "${{ github.action_path }}" && npm start --silent > "$GITHUB_WORKSPACE/target/${{ inputs.output-file-name }}"
+      run: |
+        cd "${{ github.action_path }}" && \
+        npm start --silent > "$GITHUB_WORKSPACE/target/${{ inputs.output-file-name }}"
       shell: bash
     - name: Commit
       run: |
