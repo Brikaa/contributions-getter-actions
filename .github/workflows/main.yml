@@ -36,6 +36,7 @@ jobs:
       - name: Verify happy path output
         run: |
           echo $TESTS_RESULT > tests/main/outputs/unit.md
+          echo "$TESTS_RESULT"
           if [[ `cmp tests/main/outputs/unit.md tests/main/outputs/action.md` ]]; then
             echo "Got same output as unit tests"
           else
