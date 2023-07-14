@@ -21,7 +21,7 @@ jobs:
         run: cat "$GITHUB_WORKSPACE/contributions-getter-actions-main/tests/main/outputs/.env" >> $GITHUB_ENV
         shell: bash
       - name: Set normal path output
-        uses: ${{ env.GITHUB_WORKSPACE }}/contributions-getter-actions-main
+        uses: "${{ env.GITHUB_WORKSPACE }}/contributions-getter-actions-main"
         with:
           token: ${{ env.TOKEN }}
           username: ${{ env.USERNAME }}
