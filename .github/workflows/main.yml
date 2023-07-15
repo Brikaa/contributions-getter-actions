@@ -42,6 +42,10 @@ jobs:
           cat tests/main/outputs/unit.md
           echo "================= action.md ================="
           cat tests/main/outputs/action.md
-          cmp tests/main/outputs/unit.md tests/main/outputs/action.md && echo "Got same output as unit tests" \
-          || echo "Got different output than unit tests" && exit 1
+          if cmp tests/main/outputs/unit.md tests/main/outputs/action.md ; then
+            echo "Got same output as unit tests"
+          else
+            echo "Got different output than unit tests"
+            exit 1
+          fi
         shell: bash
