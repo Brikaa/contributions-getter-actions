@@ -53,7 +53,7 @@ afterAll(async () => {
     }
   }
   const markdown = await getContributionsMarkdownUsingEnvConfig();
-  writeFileSync(path.join(__dirname, "/outputs/unit.md"), markdown);
+  writeFileSync(path.join(__dirname, "/outputs/unit.md"), markdown + '\n');
   writeFileSync(path.join(__dirname, "/outputs/.env"), envStr);
 });
 
