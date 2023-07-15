@@ -58,9 +58,9 @@ runs:
         USERNAME: ${{ github.repository_owner }}
         HEADER_FORMAT: ${{ inputs.header-format }}
         HIGHLIGHT_FORMAT: ${{ inputs.highlight-format }}
-        FILE_BEFORE_PATH: ${{ env.GITHUB_WORKSPACE }}/${{ inputs.file-before-path }}
-        FILE_AFTER_PATH: ${{ env.GITHUB_WORKSPACE }}/${{ inputs.file-after-path }}
-        OUTPUT_FILE_PATH: ${{ env.GITHUB_WORKSPACE }}/${{ inputs.output-file-path }}
+        FILE_BEFORE_PATH: ${{ github.workspace }}/${{ inputs.file-before-path }}
+        FILE_AFTER_PATH: ${{ github.workspace }}/${{ inputs.file-after-path }}
+        OUTPUT_FILE_PATH: ${{ github.workspace }}/${{ inputs.output-file-path }}
         MINIMUM_STARS_FOR_HIGHLIGHT: ${{ inputs.minimum-stars-for-highlight }}
         MONTHS_INTERVAL: ${{ inputs.months-interval }}
         GET_CONTRIBUTIONS_FN: ${{ inputs.get-contributions-fn }}
