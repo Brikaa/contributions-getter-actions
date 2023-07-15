@@ -37,7 +37,7 @@ jobs:
           get-contributions-fn: ${{ env.GET_CONTRIBUTIONS_FN }}
       - name: Verify happy path output
         run: |
-          echo -n "$TESTS_RESULT" > tests/main/outputs/unit.md
+          echo "$TESTS_RESULT" > tests/main/outputs/unit.md
           echo "================= unit.md ================="
           cat tests/main/outputs/unit.md
           echo "================= action.md ================="
