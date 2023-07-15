@@ -50,20 +50,30 @@ runs:
           node scripts/checkSafePath.js "$(pwd)" "$i"
         done
       shell: bash
+    - name: Set env vars
+      run: |
+        names=("TOKEN" "USERNAME" "HEADER_FORMAT" "HIGHLIGHT_FORMAT" "FILE_BEFORE_PATH" "FILE_AFTER_PATH" \
+        "MINIMUM_STARS_FOR_HIGHLIGHT" "MONTHS_INTERVAL" "GET_CONTRIBUTIONS_FN" "OUTPUT_FILE_PATH")
+
+        values=("${{ inputs.token }}" "${{ github.repository_owner }}" "${{ inputs.header-format }}" \
+        "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" \
+        "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}" \
+        "${{ inputs.get-contributions-fn }}" ${{ inputs.output-file-path }})
+
+        length=${#names[@]}
+        let l=$length-1
+        for i in $(seq 0 $l); do
+          if [ -n "${values[i]}" ]; then
+            if [[ ${names[i]} = *_PATH ]]; then
+              values[$i]="$GITHUB_WORKSPACE/${values[i]}"
+            fi
+            echo "${names[i]}=${values[i]}" >> "$GITHUB_ENV"
+          fi
+        done
+      shell: bash
     - name: Run
       run: cd "${{ github.action_path }}" && npm start --silent > "$OUTPUT_FILE_PATH"
       shell: bash
-      env:
-        TOKEN: ${{ inputs.token }}
-        USERNAME: ${{ github.repository_owner }}
-        HEADER_FORMAT: ${{ inputs.header-format }}
-        HIGHLIGHT_FORMAT: ${{ inputs.highlight-format }}
-        FILE_BEFORE_PATH: ${{ github.workspace }}/${{ inputs.file-before-path }}
-        FILE_AFTER_PATH: ${{ github.workspace }}/${{ inputs.file-after-path }}
-        OUTPUT_FILE_PATH: ${{ github.workspace }}/${{ inputs.output-file-path }}
-        MINIMUM_STARS_FOR_HIGHLIGHT: ${{ inputs.minimum-stars-for-highlight }}
-        MONTHS_INTERVAL: ${{ inputs.months-interval }}
-        GET_CONTRIBUTIONS_FN: ${{ inputs.get-contributions-fn }}
     - name: Commit
       run: |
         cd "$GITHUB_WORKSPACE"
