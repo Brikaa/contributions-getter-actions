@@ -2,36 +2,36 @@ name: contributions-getter-actions
 description: "Update a markdown file with all of the repositories you have contributed to since your account creation"
 inputs:
   token:
-    description: "Your GitHub token"
+    description: Your GitHub token
     required: true
   username:
-    description: "Your GitHub username"
+    description: Your GitHub username
     required: false
     default: ${{ github.repository_owner }}
   output-file-path:
-    description: "The name of the file in which to output the contributions"
+    description: The name of the file in which to output the contributions
     required: false
-    default: "README.md"
+    default: README.md
   header-format:
-    description: "Check documentation"
+    description: Check documentation
     required: false
   highlight-format:
-    description: "Check documentation"
+    description: Check documentation
     required: false
   file-before-path:
-    description: "Check documentation"
+    description: Check documentation
     required: false
   file-after-path:
-    description: "Check documentation"
+    description: Check documentation
     required: false
   minimum-stars-for-highlight:
-    description: "Check documentation"
+    description: Check documentation
     required: false
   months-interval:
-    description: "Check documentation"
+    description: Check documentation
     required: false
   get-contributions-fn:
-    description: "Check documentation"
+    description: Check documentation
     required: false
 runs:
   using: composite
@@ -41,12 +41,12 @@ runs:
     - name: Setup Node
       uses: actions/setup-node@v3
     - name: Install npm packages and build code
-      run: cd "${{ github.action_path }}" && npm install && npm run build
+      run: cd '${{ github.action_path }}' && npm install && npm run build
       shell: bash
     - name: Validate paths
       run: |
         cd "$GITHUB_WORKSPACE"
-        for i in "${{ inputs.output-file-path }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}"; do
+        for i in '${{ inputs.output-file-path }}' '${{ inputs.file-before-path }}' '${{ inputs.file-after-path }}'; do
           node scripts/checkSafePath.js "$(pwd)" "$i"
         done
       shell: bash
@@ -55,11 +55,12 @@ runs:
         names=("TOKEN" "USERNAME" "HEADER_FORMAT" "HIGHLIGHT_FORMAT" "FILE_BEFORE_PATH" "FILE_AFTER_PATH" \
         "MINIMUM_STARS_FOR_HIGHLIGHT" "MONTHS_INTERVAL" "GET_CONTRIBUTIONS_FN" "OUTPUT_FILE_PATH")
 
-        values=("${{ inputs.token }}" "${{ github.repository_owner }}" "${{ inputs.header-format }}" \
-        "${{ inputs.highlight-format }}" "${{ inputs.file-before-path }}" "${{ inputs.file-after-path }}" \
-        "${{ inputs.minimum-stars-for-highlight }}" "${{ inputs.months-interval }}" \
-        "${{ inputs.get-contributions-fn }}" ${{ inputs.output-file-path }})
+        values=('${{ inputs.token }}' '${{ github.repository_owner }}' '${{ inputs.header-format }}' \
+        '${{ inputs.highlight-format }}' '${{ inputs.file-before-path }}' '${{ inputs.file-after-path }}' \
+        '${{ inputs.minimum-stars-for-highlight }}' '${{ inputs.months-interval }}' \
+        '${{ inputs.get-contributions-fn }}' '${{ inputs.output-file-path }}')
 
+        EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
         length=${#names[@]}
         let l=$length-1
         for i in $(seq 0 $l); do
@@ -67,12 +68,14 @@ runs:
             if [[ ${names[i]} = *_PATH ]]; then
               values[$i]="$GITHUB_WORKSPACE/${values[i]}"
             fi
-            echo "${names[i]}=${values[i]}" >> "$GITHUB_ENV"
+            echo "${names[i]}<<$EOF" >> "$GITHUB_ENV"
+            echo "${values[i]}" >> "$GITHUB_ENV"
+            echo "$EOF" >> "$GITHUB_ENV"
           fi
         done
       shell: bash
     - name: Run
-      run: cd "${{ github.action_path }}" && npm start --silent > "$OUTPUT_FILE_PATH"
+      run: cd '${{ github.action_path }}' && npm start --silent > "$OUTPUT_FILE_PATH"
       shell: bash
     - name: Commit
       run: |
