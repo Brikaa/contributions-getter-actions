@@ -69,7 +69,7 @@ jobs:
       - name: Fail if previous did not fail
         run: exit 1
         shell: bash
-        if: ${{ steps.escape-output-file-path.outcome != "failure"}}
+        if: ${{ steps.escape-output-file-path.outcome != 'failure'}}
       - id: escape-file-before-path
         name: Test escape file-before-path
         uses: ./
@@ -81,7 +81,7 @@ jobs:
       - name: Fail if previous did not fail
         run: exit 1
         shell: bash
-        if: ${{ steps.escape-file-before-path.outcome != "failure"}}
+        if: ${{ steps.escape-file-before-path.outcome != 'failure'}}
       - id: escape-file-after-path
         name: Test escape file-after-path
         uses: ./
@@ -93,4 +93,4 @@ jobs:
       - name: Fail if previous did not fail
         run: exit 1
         shell: bash
-        if: ${{ steps.escape-file-after-path.outcome != "failure"}}
+        if: ${{ steps.escape-file-after-path.outcome != 'failure'}}
