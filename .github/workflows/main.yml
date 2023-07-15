@@ -1,7 +1,7 @@
 name: contributions-getter
 on: workflow_dispatch
 jobs:
-  contributions_getter_job:
+  contributions_getter_job: # This is a test
     runs-on: ubuntu-latest
     name: contributions-getter
     steps:
