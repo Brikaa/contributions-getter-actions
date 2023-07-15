@@ -18,5 +18,5 @@ export interface Environment {
   FILE_AFTER_PATH?: string; // The markdown file to put its content after the contributions content
   MINIMUM_STARS_FOR_HIGHLIGHT?: number; // The minimum number of stars required for a repo to be highlighted
   MONTHS_INTERVAL?: number; // The interval at which to get the contributions
-  GET_CONTRIBUTIONS_FN?: GetContributions;
+  MOCK_GET_CONTRIBUTIONS_FN?: GetContributions;
 }

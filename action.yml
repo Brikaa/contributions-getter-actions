@@ -1,4 +1,5 @@
 name: contributions-getter-actions
+on: [workflow_dispatch, pull_request, push]
 description: "Update a markdown file with all of the repositories you have contributed to since your account creation"
 inputs:
   token:
@@ -30,7 +31,7 @@ inputs:
   months-interval:
     description: Check documentation
     required: false
-  get-contributions-fn:
+  mock-get-contributions-fn:
     description: Check documentation
     required: false
 runs:
@@ -53,12 +54,12 @@ runs:
     - name: Set env vars
       run: |
         names=("TOKEN" "USERNAME" "HEADER_FORMAT" "HIGHLIGHT_FORMAT" "FILE_BEFORE_PATH" "FILE_AFTER_PATH" \
-        "MINIMUM_STARS_FOR_HIGHLIGHT" "MONTHS_INTERVAL" "GET_CONTRIBUTIONS_FN" "OUTPUT_FILE_PATH")
+        "MINIMUM_STARS_FOR_HIGHLIGHT" "MONTHS_INTERVAL" "MOCK_GET_CONTRIBUTIONS_FN" "OUTPUT_FILE_PATH")
 
         values=('${{ inputs.token }}' '${{ github.repository_owner }}' '${{ inputs.header-format }}' \
         '${{ inputs.highlight-format }}' '${{ inputs.file-before-path }}' '${{ inputs.file-after-path }}' \
         '${{ inputs.minimum-stars-for-highlight }}' '${{ inputs.months-interval }}' \
-        '${{ inputs.get-contributions-fn }}' '${{ inputs.output-file-path }}')
+        '${{ inputs.mock-get-contributions-fn }}' '${{ inputs.output-file-path }}')
 
         EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
         length=${#names[@]}

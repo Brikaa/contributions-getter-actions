@@ -1,18 +1,5 @@
 TODO
-    - Test with different inputs
-        - Unit tests indicate code is working properly
-        - Just need to verify data is passed from and to GitHub actions correctly
-            - Workflow:
-                - After unit tests run successfully
-                - Two files should be generated: an inputs file "I", and a result file "R"
-                - "I" should contain all inputs with modified values than default
-                - "R" contains the result of running these inputs on a real GitHub account
-                - Call the GitHub action using inputs from "I"
-                - Validate that the produced file is the same as the "R"
-                - Questions
-                    - How to load inputs from a file?
-                        - Check how to save stuff between jobs ($GITHUB_OUTPUT)
     - Configurable sort?
     - Repos ignore?
     - Script to generate the GitHub env format (DRY in action.yml, main.yml)
-    - Use monthsInterval in mock
+    - Use monthsInterval, token, username in mock objects to verify they are passed correctly

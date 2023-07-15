@@ -105,7 +105,7 @@ export const getContributionsMarkdownUsingEnvConfig = async () => {
   const validGetContributionsFn = makeValidator((x) => {
     const getContributionsType = GET_CONTRIBUTIONS_TYPES.find((c) => c === x);
     if (getContributionsType === undefined)
-      throw new Error("Invalid GET_CONTRIBUTIONS_FN");
+      throw new Error("Invalid MOCK_GET_CONTRIBUTIONS_FN");
     else {
       let getContributionsFn;
       switch (getContributionsType) {
@@ -132,7 +132,7 @@ export const getContributionsMarkdownUsingEnvConfig = async () => {
     HIGHLIGHT_FORMAT: str({ default: undefined }),
     MINIMUM_STARS_FOR_HIGHLIGHT: int({ default: undefined }),
     MONTHS_INTERVAL: int({ default: undefined }),
-    GET_CONTRIBUTIONS_FN: validGetContributionsFn({ default: undefined }),
+    MOCK_GET_CONTRIBUTIONS_FN: validGetContributionsFn({ default: undefined }),
   });
 
   const config: Config = {
@@ -144,7 +144,7 @@ export const getContributionsMarkdownUsingEnvConfig = async () => {
     fileBefore: env.FILE_BEFORE_PATH,
     fileAfter: env.FILE_AFTER_PATH,
     minimumStarsForHighlight: env.MINIMUM_STARS_FOR_HIGHLIGHT,
-    getContributionsFn: env.GET_CONTRIBUTIONS_FN,
+    getContributionsFn: env.MOCK_GET_CONTRIBUTIONS_FN,
   };
   const markdown = await getContributionsMarkdown(
     env.TOKEN,
