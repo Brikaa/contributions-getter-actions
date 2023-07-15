@@ -41,7 +41,7 @@ runs:
     - name: Setup Node
       uses: actions/setup-node@v3
     - name: Install npm packages and build code
-      run: cd '${{ github.action_path }}' && npm install && npm run build
+      run: cd '${{ github.action_path }}' && npm ci && npm run build
       shell: bash
     - name: Validate paths
       run: |

@@ -12,7 +12,7 @@ TODO
                 - Questions
                     - How to load inputs from a file?
                         - Check how to save stuff between jobs ($GITHUB_OUTPUT)
-    - Configurable username which defaults to the repository owner
     - Configurable sort?
     - Repos ignore?
+    - Script to generate the GitHub env format (DRY in action.yml, main.yml)
     - Use monthsInterval in mock

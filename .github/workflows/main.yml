@@ -10,7 +10,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
       - name: Install npm packages and build code
-        run: npm install && npm run build
+        run: npm ci && npm run build
         shell: bash
       - name: Run unit tests
         run: npm test
@@ -49,3 +49,48 @@ jobs:
             exit 1
           fi
         shell: bash
+      - name: Test with all defaults
+        uses: ./
+        with:
+          token: ${{ env.TOKEN }}
+          username: ${{ env.USERNAME }}
+          output-file-path: tests/main/outputs/action.md
+      - name: Output all defaults result
+        run: cat tests/main/outputs/action.md
+        shell: bash
+      - id: escape-output-file-path
+        name: Test escape output-file-path
+        uses: ./
+        with:
+          token: ${{ env.TOKEN }}
+          username: ${{ env.USERNAME }}
+          output-file-path: ../tests/main/outputs/action.md
+          continue-on-error: true
+      - name: Fail if previous did not fail
+        run: exit 1
+        shell: bash
+        if: ${{ steps.escape-output-file-path.outcome != "failure"}}
+      - id: escape-file-before-path
+        name: Test escape file-before-path
+        uses: ./
+        with:
+          token: ${{ env.TOKEN }}
+          username: ${{ env.USERNAME }}
+          file-before-path: ../evil/stuff
+          continue-on-error: true
+      - name: Fail if previous did not fail
+        run: exit 1
+        shell: bash
+        if: ${{ steps.escape-file-before-path.outcome != "failure"}}
+      - id: escape-file-after-path
+        name: Test escape file-after-path
+        uses: ./
+        with:
+          token: ${{ env.TOKEN }}
+          username: ${{ env.USERNAME }}
+          file-after-path: ../evil/stuff
+          continue-on-error: true
+      - name: Fail if previous did not fail
+        run: exit 1
+        shell: bash
+        if: ${{ steps.escape-file-after-path.outcome != "failure"}}
