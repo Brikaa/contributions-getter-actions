@@ -47,7 +47,7 @@ runs:
       run: |
         cd "$GITHUB_WORKSPACE"
         for i in '${{ inputs.output-file-path }}' '${{ inputs.file-before-path }}' '${{ inputs.file-after-path }}'; do
-          node scripts/checkSafePath.js "$(pwd)" "$i"
+          node scripts/checkSafePath.js "$(pwd)" "$i" || exit 1
         done
       shell: bash
     - name: Set env vars

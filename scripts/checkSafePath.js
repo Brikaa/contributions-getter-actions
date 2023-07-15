@@ -5,5 +5,5 @@ const targetPath = process.argv[3];
 const rel = relative(cwd, targetPath);
 if (rel.startsWith("..")) {
   console.log(`${targetPath} tries to escape ${cwd}`);
-  process.exit(0);
+  process.exit(1);
 }

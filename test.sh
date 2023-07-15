@@ -1,3 +1,3 @@
 for i in "test" "yo" "../HAHAH"; do
-    node scripts/checkSafePath.js "$(pwd)" "$i"
+    node scripts/checkSafePath.js "$(pwd)" "$i" || echo "bad bad"
 done

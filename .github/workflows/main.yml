@@ -65,7 +65,7 @@ jobs:
         with:
           token: ${{ env.TOKEN }}
           username: ${{ env.USERNAME }}
-          output-file-path: ../tests/main/outputs/action.md
+          output-file-path: ${{ github.env }}
       - name: Fail if previous did not fail
         run: exit 1
         shell: bash
@@ -77,7 +77,7 @@ jobs:
         with:
           token: ${{ env.TOKEN }}
           username: ${{ env.USERNAME }}
-          file-before-path: ../evil/stuff
+          file-before-path: ${{ github.env }}
       - name: Fail if previous did not fail
         run: exit 1
         shell: bash
@@ -89,7 +89,7 @@ jobs:
         with:
           token: ${{ env.TOKEN }}
           username: ${{ env.USERNAME }}
-          file-after-path: ../evil/stuff
+          file-after-path: ${{ github.env }}
       - name: Fail if previous did not fail
         run: exit 1
         shell: bash
